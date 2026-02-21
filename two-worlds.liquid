@@ -1,0 +1,128 @@
+<section class="takl-two-worlds" aria-label="{{ section.settings.section_label | default: 'Collections' }}">
+
+  {%- for block in section.blocks -%}
+    {%- assign world_class = 'takl-world--alpine' -%}
+    {%- if forloop.index == 2 -%}
+      {%- assign world_class = 'takl-world--coastal' -%}
+    {%- endif -%}
+
+    <div class="takl-world {{ world_class }} takl-reveal{% if forloop.index == 2 %} takl-reveal--d1{% endif %}"
+         {{ block.shopify_attributes }}>
+
+      <!-- Topo SVG background -->
+      <svg class="takl-world__topo" viewBox="0 0 500 600" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <ellipse cx="250" cy="300" rx="240" ry="170" fill="none" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>
+        <ellipse cx="250" cy="300" rx="188" ry="130" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+        <ellipse cx="250" cy="300" rx="136" ry="92" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+        <ellipse cx="250" cy="300" rx="84" ry="56" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+        <ellipse cx="250" cy="300" rx="40" ry="26" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+      </svg>
+
+      {%- if block.settings.image != blank -%}
+        {{ block.settings.image | image_url: width: 1200
+           | image_tag:
+             class: 'takl-world__image',
+             loading: 'lazy',
+             alt: block.settings.image.alt | default: block.settings.title }}
+      {%- endif -%}
+
+      <div class="takl-world__number" aria-hidden="true">0{{ forloop.index }}</div>
+
+      <div class="takl-world__content">
+        <span class="takl-world__label">{{ block.settings.label }}</span>
+        <h2 class="takl-world__title">{{ block.settings.title }}</h2>
+        <p class="takl-world__body">{{ block.settings.body }}</p>
+        {%- if block.settings.link_label != blank -%}
+          <a href="{{ block.settings.link_url }}" class="takl-world__link">
+            {{ block.settings.link_label }} →
+          </a>
+        {%- endif -%}
+      </div>
+    </div>
+  {%- endfor -%}
+
+</section>
+
+{% schema %}
+{
+  "name": "Two Worlds — Split",
+  "max_blocks": 2,
+  "settings": [
+    {
+      "type": "text",
+      "id": "section_label",
+      "label": "Accessibility label",
+      "default": "Our Collections"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "world",
+      "name": "World Panel",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Background image",
+          "info": "Optional — panel has built-in gradient"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Eyebrow label",
+          "default": "Alpine Collection"
+        },
+        {
+          "type": "textarea",
+          "id": "title",
+          "label": "Title",
+          "default": "The mountain\ndemands\neverything.",
+          "info": "Wrap words in <em></em> for italic"
+        },
+        {
+          "type": "textarea",
+          "id": "body",
+          "label": "Body text",
+          "default": "Technical outerwear engineered for altitude. Waterproof membranes, insulated with recycled fill, sealed seams, and cut for full range of motion on the slope."
+        },
+        {
+          "type": "text",
+          "id": "link_label",
+          "label": "Link label",
+          "default": "Explore Collection"
+        },
+        {
+          "type": "url",
+          "id": "link_url",
+          "label": "Link URL"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Two Worlds — Split",
+      "blocks": [
+        {
+          "type": "world",
+          "settings": {
+            "label": "Alpine Collection",
+            "title": "The mountain\ndemands\neverything.",
+            "body": "Technical outerwear engineered for altitude. Waterproof membranes, insulated with recycled fill, sealed seams, and cut for full range of motion on the slope.",
+            "link_label": "Explore Alpine"
+          }
+        },
+        {
+          "type": "world",
+          "settings": {
+            "label": "Coastal Collection",
+            "title": "The water\nasks\nnothing less.",
+            "body": "Lightweight performance fabrics that breathe in the heat and resist salt air. From the dock to the dinner table — no wardrobe change required.",
+            "link_label": "Explore Coastal"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

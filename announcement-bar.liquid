@@ -1,0 +1,38 @@
+{%- if section.settings.show_announcement -%}
+  <div class="takl-announcement" role="note">
+    {%- if section.settings.announcement_link != blank -%}
+      <a href="{{ section.settings.announcement_link }}">{{ section.settings.announcement_text }}</a>
+    {%- else -%}
+      {{ section.settings.announcement_text }}
+    {%- endif -%}
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Announcement Bar",
+  "limit": 1,
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_announcement",
+      "label": "Show announcement",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "announcement_text",
+      "label": "Announcement text",
+      "default": "Complimentary monogramming on all orders over $500. Shop the SS 2026 Collection."
+    },
+    {
+      "type": "url",
+      "id": "announcement_link",
+      "label": "Link (optional)"
+    }
+  ],
+  "presets": [
+    { "name": "Announcement Bar" }
+  ]
+}
+{% endschema %}

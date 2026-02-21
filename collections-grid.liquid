@@ -1,0 +1,130 @@
+<section class="takl-collections" aria-labelledby="collections-title">
+
+  <div class="takl-section-header takl-reveal">
+    <div>
+      <span class="takl-eyebrow">{{ section.settings.eyebrow }}</span>
+      <h2 class="takl-section-title" id="collections-title">{{ section.settings.title }}</h2>
+    </div>
+    {%- if section.settings.view_all_label != blank -%}
+      <a href="{{ routes.collections_url }}" class="btn-ghost-dark">
+        {{ section.settings.view_all_label }} →
+      </a>
+    {%- endif -%}
+  </div>
+
+  <div class="takl-collections__grid">
+    {%- for block in section.blocks -%}
+      {%- liquid
+        if block.settings.collection != blank
+          assign coll = collections[block.settings.collection]
+          assign coll_title = coll.title
+          assign coll_url   = coll.url
+          assign coll_image = coll.image | default: coll.products.first.featured_image
+          assign coll_count = coll.products_count
+        else
+          assign coll_title = block.settings.title
+          assign coll_url   = block.settings.url
+          assign coll_image = block.settings.image
+          assign coll_count = blank
+        endif
+      -%}
+      <article class="takl-collection-card takl-reveal{% if forloop.index > 1 %} takl-reveal--d{{ forloop.index | minus: 1 }}{% endif %}"
+               {{ block.shopify_attributes }}>
+        <a href="{{ coll_url | default: '#' }}" aria-label="{{ coll_title }}">
+          <div class="takl-collection-card__media">
+            {%- if coll_image != blank -%}
+              {{ coll_image | image_url: width: 900
+                 | image_tag:
+                   loading: 'lazy',
+                   alt: coll_image.alt | default: coll_title }}
+            {%- else -%}
+              <div style="width:100%;height:100%;background:{% cycle '#3D4E60','#B0A590','#4A5F72' %};"></div>
+            {%- endif -%}
+            <div class="takl-collection-card__overlay"></div>
+          </div>
+          <div class="takl-collection-card__content">
+            <span class="takl-collection-card__tag">{{ block.settings.tag }}</span>
+            <h3 class="takl-collection-card__name">{{ coll_title }}</h3>
+            {%- if coll_count != blank -%}
+              <p class="takl-collection-card__count">{{ coll_count }} Pieces</p>
+            {%- endif -%}
+          </div>
+        </a>
+      </article>
+    {%- endfor -%}
+  </div>
+
+</section>
+
+{% schema %}
+{
+  "name": "Collections Grid",
+  "max_blocks": 6,
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Shop by World"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section title",
+      "default": "The Collections"
+    },
+    {
+      "type": "text",
+      "id": "view_all_label",
+      "label": "View all label",
+      "default": "All Collections"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "collection",
+      "name": "Collection Card",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection",
+          "info": "Leave blank to enter details manually below"
+        },
+        {
+          "type": "text",
+          "id": "tag",
+          "label": "Eyebrow tag",
+          "default": "Winter / Spring"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title (if no collection selected)",
+          "default": "Alpine Series"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image (if no collection selected)"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Link (if no collection selected)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collections Grid",
+      "blocks": [
+        { "type": "collection", "settings": { "tag": "Winter / Spring", "title": "Alpine Series" } },
+        { "type": "collection", "settings": { "tag": "Summer / Fall", "title": "Coastal Series" } },
+        { "type": "collection", "settings": { "tag": "Year Round", "title": "Meridian Line" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

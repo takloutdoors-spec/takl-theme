@@ -1,0 +1,77 @@
+<header class="takl-header" id="takl-header" role="banner">
+  <div class="takl-header__inner">
+
+    <!-- Logo -->
+    <a href="{{ routes.root_url }}" class="takl-header__logo" aria-label="{{ shop.name }} home">
+      {%- if section.settings.logo != blank -%}
+        {{ section.settings.logo | image_url: width: 200 | image_tag: alt: shop.name, loading: 'eager' }}
+      {%- else -%}
+        {{ shop.name }}
+      {%- endif -%}
+    </a>
+
+    <!-- Desktop Nav -->
+    <nav class="takl-header__nav" aria-label="Primary navigation">
+      {%- for link in linklists[section.settings.menu].links -%}
+        {%- if link.links != blank -%}
+          <div class="takl-header__nav-item has-dropdown">
+            <a href="{{ link.url }}" class="takl-header__nav-link">{{ link.title }}</a>
+          </div>
+        {%- else -%}
+          <a href="{{ link.url }}" class="takl-header__nav-link"
+             {% if link.active %}aria-current="page"{% endif %}>
+            {{ link.title }}
+          </a>
+        {%- endif -%}
+      {%- endfor -%}
+    </nav>
+
+    <!-- Actions -->
+    <div class="takl-header__actions">
+      {%- if shop.customer_accounts_enabled -%}
+        <a href="{{ routes.account_url }}" class="takl-header__action" aria-label="Account">
+          Account
+        </a>
+      {%- endif -%}
+
+      <a href="{{ routes.cart_url }}" class="takl-header__action takl-header__action--cart"
+         aria-label="Cart ({{ cart.item_count }} items)">
+        Bag
+        <span class="takl-cart-count" aria-live="polite">({{ cart.item_count }})</span>
+      </a>
+
+      <!-- Mobile burger -->
+      <button class="takl-header__burger" id="takl-burger"
+              aria-label="Open menu" aria-expanded="false" aria-controls="takl-drawer">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+
+  </div>
+</header>
+
+{% schema %}
+{
+  "name": "Header",
+  "limit": 1,
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo image",
+      "info": "Leave blank to use shop name as text"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "default": "main-menu",
+      "label": "Navigation menu"
+    }
+  ],
+  "presets": [
+    { "name": "Header" }
+  ]
+}
+{% endschema %}

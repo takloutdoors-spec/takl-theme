@@ -1,0 +1,135 @@
+{
+  "sections": {
+    "announcement": {
+      "type": "announcement-bar",
+      "settings": {
+        "show_announcement": true,
+        "announcement_text": "Complimentary monogramming on all orders over $500. Shop the SS 2026 Collection."
+      }
+    },
+    "hero": {
+      "type": "hero",
+      "settings": {
+        "eyebrow": "SS 2026 — For Every Latitude",
+        "heading": "Where the\n<em>wild</em>\nis refined.",
+        "subheading": "Outerwear for the person who skis Banff in January and anchors off the Exumas in July. Built for both. Compromises for neither.",
+        "cta_primary_label": "Shop Collection",
+        "cta_secondary_label": "Our Story",
+        "show_coordinates": true,
+        "coord_1": "51°11′N 115°34′W",
+        "coord_1_label": "Banff, AB — Winter",
+        "coord_2": "25°28′N 76°40′W",
+        "coord_2_label": "Exuma, BS — Summer",
+        "product_label_eyebrow": "New Arrival",
+        "product_label": "The Meridian Jacket"
+      }
+    },
+    "ticker": {
+      "type": "ticker-band",
+      "blocks": {
+        "t1": { "type": "item", "settings": { "text": "Merino Wool Blend" } },
+        "t2": { "type": "item", "settings": { "text": "TAKL — SS 2026" } },
+        "t3": { "type": "item", "settings": { "text": "Lifetime Repair Guarantee" } },
+        "t4": { "type": "item", "settings": { "text": "Sustainably Sourced" } },
+        "t5": { "type": "item", "settings": { "text": "Field & Water Tested" } },
+        "t6": { "type": "item", "settings": { "text": "Complimentary Monogramming" } }
+      },
+      "block_order": ["t1","t2","t3","t4","t5","t6"]
+    },
+    "intro": {
+      "type": "intro-statement",
+      "settings": {
+        "eyebrow": "The TAKL Philosophy",
+        "title": "Two worlds.\nOne <em>wardrobe.</em>",
+        "body": "There is a certain kind of person who does not choose between adventure and elegance. They expect both. They move between the alpine and the ocean with the same ease they move between a board meeting and a dinner reservation.",
+        "body2": "TAKL is built for them. Technical enough for the mountain. Refined enough for the room."
+      }
+    },
+    "products": {
+      "type": "featured-products",
+      "settings": {
+        "eyebrow": "Featured",
+        "title": "New Arrivals",
+        "view_all_label": "View All",
+        "product_count": 5
+      }
+    },
+    "worlds": {
+      "type": "two-worlds",
+      "blocks": {
+        "alpine": {
+          "type": "world",
+          "settings": {
+            "label": "Alpine Collection",
+            "title": "The mountain\ndemands\n<em>everything.</em>",
+            "body": "Technical outerwear engineered for altitude. Waterproof membranes, insulated with recycled fill, sealed seams, and cut for full range of motion on the slope.",
+            "link_label": "Explore Alpine"
+          }
+        },
+        "coastal": {
+          "type": "world",
+          "settings": {
+            "label": "Coastal Collection",
+            "title": "The water\nasks\n<em>nothing less.</em>",
+            "body": "Lightweight performance fabrics that breathe in the heat and resist salt air. From the dock to the dinner table — no wardrobe change required.",
+            "link_label": "Explore Coastal"
+          }
+        }
+      },
+      "block_order": ["alpine","coastal"]
+    },
+    "craft": {
+      "type": "craft-strip",
+      "blocks": {
+        "c1": { "type": "pillar", "settings": { "title": "Materials", "body": "Merino, pima cotton, technical nylon, recycled fill. Sourced from certified mills in Italy, Japan, and New Zealand." } },
+        "c2": { "type": "pillar", "settings": { "title": "Construction", "body": "Reinforced seams, YKK hardware, and tailoring techniques adapted from alpine guiding tradition." } },
+        "c3": { "type": "pillar", "settings": { "title": "Testing", "body": "Every product field-tested in Banff, Patagonia, and the Bahamian out-islands before a single unit is sold." } },
+        "c4": { "type": "pillar", "settings": { "title": "Guarantee", "body": "Free lifetime repairs on every TAKL garment. Built to last. Backed to last longer." } }
+      },
+      "block_order": ["c1","c2","c3","c4"]
+    },
+    "quote": {
+      "type": "pull-quote",
+      "settings": {
+        "quote": "There is no conflict between the mountain and the marina. TAKL was built on that belief.",
+        "attribution": "Thomas Alcott, Founder & Creative Director"
+      }
+    },
+    "collections": {
+      "type": "collections-grid",
+      "settings": {
+        "eyebrow": "Shop by World",
+        "title": "The Collections",
+        "view_all_label": "All Collections"
+      },
+      "blocks": {
+        "col1": { "type": "collection", "settings": { "tag": "Winter / Spring", "title": "Alpine Series" } },
+        "col2": { "type": "collection", "settings": { "tag": "Summer / Fall", "title": "Coastal Series" } },
+        "col3": { "type": "collection", "settings": { "tag": "Year Round", "title": "Meridian Line" } }
+      },
+      "block_order": ["col1","col2","col3"]
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {
+        "eyebrow": "The Inner Circle",
+        "title": "First access.\n<em>Always.</em>",
+        "body": "Limited drops, private events, and early access to new collections — sent only to those who know what to look for.",
+        "button_label": "Join",
+        "note": "Private and unobtrusive. Unsubscribe anytime."
+      }
+    }
+  },
+  "order": [
+    "announcement",
+    "hero",
+    "ticker",
+    "intro",
+    "products",
+    "worlds",
+    "craft",
+    "quote",
+    "collections",
+    "newsletter"
+  ]
+}

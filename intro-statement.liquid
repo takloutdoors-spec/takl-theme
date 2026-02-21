@@ -1,0 +1,48 @@
+<div class="takl-intro">
+  <div class="takl-reveal">
+    <h2 class="takl-intro__title">{{ section.settings.title }}</h2>
+  </div>
+  <div class="takl-reveal takl-reveal--d1">
+    <span class="takl-eyebrow">{{ section.settings.eyebrow }}</span>
+    <div class="takl-intro__rule"></div>
+    <p class="takl-intro__body">{{ section.settings.body }}</p>
+    <p class="takl-intro__body2">{{ section.settings.body2 }}</p>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Intro Statement",
+  "limit": 1,
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "The TAKL Philosophy"
+    },
+    {
+      "type": "textarea",
+      "id": "title",
+      "label": "Title",
+      "default": "Two worlds.\nOne wardrobe.",
+      "info": "Wrap words in <em></em> for italic accent style."
+    },
+    {
+      "type": "textarea",
+      "id": "body",
+      "label": "Body copy",
+      "default": "There is a certain kind of person who does not choose between adventure and elegance. They expect both. They move between the alpine and the ocean with the same ease they move between a board meeting and a dinner reservation."
+    },
+    {
+      "type": "textarea",
+      "id": "body2",
+      "label": "Secondary body copy",
+      "default": "TAKL is built for them. Technical enough for the mountain. Refined enough for the room."
+    }
+  ],
+  "presets": [
+    { "name": "Intro Statement" }
+  ]
+}
+{% endschema %}

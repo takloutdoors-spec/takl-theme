@@ -1,0 +1,46 @@
+{%- comment -%}
+  Usage: {% render 'product-card', product: product, badge: 'New', index: forloop.index %}
+{%- endcomment -%}
+
+{%- liquid
+  assign badge_text = badge | default: ''
+  assign card_url   = product.url | default: '#'
+  assign card_image = product.featured_image
+  assign card_price = product.price | money
+  assign card_title = product.title
+  assign card_type  = product.type | default: ''
+  assign card_variants = product.variants.size
+-%}
+
+<article class="takl-product-card takl-reveal{% if index > 1 %} takl-reveal--d{{ index | minus: 1 }}{% endif %}"
+         data-product-id="{{ product.id }}">
+  <a href="{{ card_url }}" aria-label="{{ card_title | escape }}">
+    <div class="takl-product-card__media">
+
+      {%- if badge_text != blank -%}
+        <span class="takl-product-card__badge" aria-label="{{ badge_text }}">{{ badge_text }}</span>
+      {%- endif -%}
+
+      {%- if card_image != blank -%}
+        {{ card_image | image_url: width: 800
+           | image_tag:
+             class: 'takl-product-card__img',
+             loading: 'lazy',
+             alt: card_image.alt | default: card_title }}
+      {%- else -%}
+        <div class="takl-product-card__img" style="background: #3D4E60; aspect-ratio: 3/4;"></div>
+      {%- endif -%}
+
+    </div>
+    <div class="takl-product-card__info">
+      <p class="takl-product-card__name">{{ card_title }}</p>
+      <div class="takl-product-card__meta">
+        <span class="takl-product-card__detail">
+          {{ card_type }}
+          {%- if card_variants > 1 %} · {{ card_variants }} Colorways{%- endif -%}
+        </span>
+        <span class="takl-product-card__price">{{ card_price }}</span>
+      </div>
+    </div>
+  </a>
+</article>

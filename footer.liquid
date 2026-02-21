@@ -1,0 +1,129 @@
+<footer class="takl-footer" role="contentinfo">
+  <div class="takl-footer__top">
+
+    <!-- Brand column -->
+    <div>
+      <a href="{{ routes.root_url }}" class="takl-footer__brand-name">{{ shop.name }}</a>
+      <p class="takl-footer__tagline">{{ section.settings.tagline }}</p>
+      {%- if section.settings.show_coordinates -%}
+        <p class="takl-footer__coords">{{ section.settings.coordinates }}</p>
+      {%- endif -%}
+    </div>
+
+    <!-- Link columns -->
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'link_column' -%}
+        <div {{ block.shopify_attributes }}>
+          <span class="takl-footer__col-title">{{ block.settings.title }}</span>
+          <ul class="takl-footer__links">
+            {%- if block.settings.menu != blank -%}
+              {%- for link in linklists[block.settings.menu].links -%}
+                <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+              {%- endfor -%}
+            {%- endif -%}
+          </ul>
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
+
+  </div>
+
+  <div class="takl-footer__bottom">
+    <p class="takl-footer__copy">
+      &copy; {{ 'now' | date: '%Y' }} {{ shop.name }}.
+      {{ section.settings.copyright_text }}
+    </p>
+    <div class="takl-footer__socials">
+      {%- if section.settings.instagram_url != blank -%}
+        <a href="{{ section.settings.instagram_url }}" target="_blank" rel="noopener" aria-label="Instagram">Instagram</a>
+      {%- endif -%}
+      {%- if section.settings.pinterest_url != blank -%}
+        <a href="{{ section.settings.pinterest_url }}" target="_blank" rel="noopener" aria-label="Pinterest">Pinterest</a>
+      {%- endif -%}
+      {%- if section.settings.linkedin_url != blank -%}
+        <a href="{{ section.settings.linkedin_url }}" target="_blank" rel="noopener" aria-label="LinkedIn">LinkedIn</a>
+      {%- endif -%}
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "limit": 1,
+  "blocks": [
+    {
+      "type": "link_column",
+      "name": "Link Column",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Column title",
+          "default": "Collections"
+        },
+        {
+          "type": "link_list",
+          "id": "menu",
+          "label": "Menu"
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "textarea",
+      "id": "tagline",
+      "label": "Brand tagline",
+      "default": "For the alpine and the ocean. For the summit and the shore. Built for every latitude."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_coordinates",
+      "label": "Show coordinates",
+      "default": true
+    },
+    {
+      "type": "textarea",
+      "id": "coordinates",
+      "label": "Location text",
+      "default": "Banff, AB · Aspen, CO\nJupiter, FL · Nassau, BS"
+    },
+    {
+      "type": "text",
+      "id": "copyright_text",
+      "label": "Copyright suffix",
+      "default": "All rights reserved."
+    },
+    {
+      "type": "header",
+      "content": "Social Links"
+    },
+    {
+      "type": "url",
+      "id": "instagram_url",
+      "label": "Instagram URL"
+    },
+    {
+      "type": "url",
+      "id": "pinterest_url",
+      "label": "Pinterest URL"
+    },
+    {
+      "type": "url",
+      "id": "linkedin_url",
+      "label": "LinkedIn URL"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Footer",
+      "blocks": [
+        { "type": "link_column", "settings": { "title": "Collections" } },
+        { "type": "link_column", "settings": { "title": "Company" } },
+        { "type": "link_column", "settings": { "title": "Client Care" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

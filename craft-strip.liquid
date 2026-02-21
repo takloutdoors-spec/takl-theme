@@ -1,0 +1,50 @@
+<section class="takl-craft" aria-labelledby="craft-title">
+  <div class="takl-craft__inner">
+    {%- for block in section.blocks -%}
+      <div class="takl-craft__item takl-reveal{% if forloop.index > 1 %} takl-reveal--d{{ forloop.index | minus: 1 }}{% endif %}"
+           {{ block.shopify_attributes }}>
+        <div class="takl-craft__num" aria-hidden="true">0{{ forloop.index }}</div>
+        <p class="takl-craft__title">{{ block.settings.title }}</p>
+        <p class="takl-craft__body">{{ block.settings.body }}</p>
+      </div>
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Craft Strip",
+  "max_blocks": 4,
+  "blocks": [
+    {
+      "type": "pillar",
+      "name": "Craft Pillar",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Materials"
+        },
+        {
+          "type": "textarea",
+          "id": "body",
+          "label": "Description",
+          "default": "Merino, pima cotton, technical nylon, recycled fill. Sourced from certified mills in Italy, Japan, and New Zealand."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Craft Strip",
+      "blocks": [
+        { "type": "pillar", "settings": { "title": "Materials", "body": "Merino, pima cotton, technical nylon, recycled fill. Sourced from certified mills in Italy, Japan, and New Zealand." } },
+        { "type": "pillar", "settings": { "title": "Construction", "body": "Reinforced seams, YKK hardware, and tailoring techniques adapted from alpine guiding tradition." } },
+        { "type": "pillar", "settings": { "title": "Testing", "body": "Every product field-tested in Banff, Patagonia, and the Bahamian out-islands before a single unit is sold." } },
+        { "type": "pillar", "settings": { "title": "Guarantee", "body": "Free lifetime repairs on every TAKL garment. Built to last. Backed to last longer." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

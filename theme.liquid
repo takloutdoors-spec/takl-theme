@@ -1,0 +1,59 @@
+<!doctype html>
+<html class="no-js" lang="{{ request.locale.iso_code }}">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="#2A3240">
+    <link rel="canonical" href="{{ canonical_url }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    {%- if settings.favicon != blank -%}
+      <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32 }}">
+    {%- endif -%}
+
+    <title>
+      {{ page_title }}
+      {%- if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif -%}
+      {%- if current_page != 1 %} &ndash; Page {{ current_page }}{% endif -%}
+      {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
+    </title>
+
+    {%- if page_description -%}
+      <meta name="description" content="{{ page_description | escape }}">
+    {%- endif -%}
+
+    {% render 'meta-tags' %}
+
+    {{ content_for_header }}
+
+    {{ 'takl.css' | asset_url | stylesheet_tag }}
+    {{ 'takl-sections.css' | asset_url | stylesheet_tag }}
+  </head>
+
+  <body class="template-{{ template.name }}">
+    <a class="skip-to-content-link" href="#MainContent">Skip to content</a>
+
+    <div id="takl-cursor" aria-hidden="true"></div>
+    <div id="takl-cursor-ring" aria-hidden="true"></div>
+    <div class="takl-overlay" id="takl-overlay" aria-hidden="true"></div>
+
+    <nav class="takl-nav-drawer" id="takl-drawer" aria-label="Mobile navigation">
+      <button class="takl-nav-drawer__close" id="takl-drawer-close" aria-label="Close menu">&#x2715;</button>
+      {%- for link in linklists.main-menu.links -%}
+        <a class="takl-nav-drawer__link" href="{{ link.url }}">{{ link.title }}</a>
+      {%- endfor -%}
+    </nav>
+
+    {%- sections 'header-group' -%}
+
+    <main id="MainContent" role="main" tabindex="-1">
+      {{ content_for_layout }}
+    </main>
+
+    {%- sections 'footer-group' -%}
+
+    <script src="{{ 'takl.js' | asset_url }}" defer></script>
+  </body>
+</html>

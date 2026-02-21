@@ -1,0 +1,46 @@
+<div class="takl-ticker" aria-hidden="true">
+  <div class="takl-ticker__inner">
+    {%- for i in (1..2) -%}
+      {%- for block in section.blocks -%}
+        <span class="takl-ticker__item">
+          {{ block.settings.text }}
+          <span class="takl-ticker__dot"></span>
+        </span>
+      {%- endfor -%}
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Ticker Band",
+  "max_blocks": 10,
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Ticker item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Merino Wool Blend"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Ticker Band",
+      "blocks": [
+        { "type": "item", "settings": { "text": "Merino Wool Blend" } },
+        { "type": "item", "settings": { "text": "TAKL — SS 2026" } },
+        { "type": "item", "settings": { "text": "Lifetime Repair Guarantee" } },
+        { "type": "item", "settings": { "text": "Sustainably Sourced" } },
+        { "type": "item", "settings": { "text": "Field & Water Tested" } },
+        { "type": "item", "settings": { "text": "Complimentary Monogramming" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,188 @@
+<section class="takl-hero" aria-label="Hero">
+
+  <!-- LEFT: Dark alpine panel with headline -->
+  <div class="takl-hero__left">
+    <div class="takl-hero__left-content">
+
+      <span class="takl-hero__eyebrow">{{ section.settings.eyebrow }}</span>
+
+      <h1 class="takl-hero__title">
+        {{ section.settings.heading | newline_to_br }}
+      </h1>
+
+      <p class="takl-hero__sub">{{ section.settings.subheading }}</p>
+
+      <div class="takl-hero__cta">
+        {%- if section.settings.cta_primary_label != blank -%}
+          <a href="{{ section.settings.cta_primary_url }}" class="btn-brass">
+            {{ section.settings.cta_primary_label }}
+            <span class="arr" aria-hidden="true">→</span>
+          </a>
+        {%- endif -%}
+        {%- if section.settings.cta_secondary_label != blank -%}
+          <a href="{{ section.settings.cta_secondary_url }}" class="btn-ghost-light">
+            {{ section.settings.cta_secondary_label }}
+          </a>
+        {%- endif -%}
+      </div>
+
+    </div>
+  </div>
+
+  <!-- RIGHT: Warm sand panel with product image -->
+  <div class="takl-hero__right" aria-hidden="true">
+    <div class="takl-hero__right-bg"></div>
+
+    {%- if section.settings.hero_image != blank -%}
+      {{ section.settings.hero_image | image_url: width: 1400
+         | image_tag:
+           class: 'takl-hero__image',
+           loading: 'eager',
+           fetchpriority: 'high',
+           alt: section.settings.hero_image.alt | default: shop.name }}
+    {%- endif -%}
+
+    <!-- Topographic SVG -->
+    <svg class="takl-hero__topo" viewBox="0 0 600 700" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <ellipse cx="300" cy="350" rx="280" ry="200" fill="none" stroke="rgba(42,50,64,0.2)" stroke-width="1"/>
+      <ellipse cx="300" cy="350" rx="225" ry="158" fill="none" stroke="rgba(42,50,64,0.16)" stroke-width="1"/>
+      <ellipse cx="300" cy="350" rx="170" ry="116" fill="none" stroke="rgba(42,50,64,0.12)" stroke-width="1"/>
+      <ellipse cx="300" cy="350" rx="118" ry="78" fill="none" stroke="rgba(42,50,64,0.09)" stroke-width="1"/>
+      <ellipse cx="300" cy="350" rx="70" ry="44" fill="none" stroke="rgba(42,50,64,0.06)" stroke-width="1"/>
+      <ellipse cx="300" cy="350" rx="30" ry="18" fill="none" stroke="rgba(42,50,64,0.05)" stroke-width="1"/>
+      <line x1="0" y1="490" x2="600" y2="290" stroke="rgba(42,50,64,0.07)" stroke-width="1"/>
+      <line x1="0" y1="560" x2="600" y2="360" stroke="rgba(42,50,64,0.05)" stroke-width="1"/>
+    </svg>
+
+    {%- if section.settings.show_coordinates -%}
+      <div class="takl-hero__coords">
+        <p>{{ section.settings.coord_1 }}</p>
+        <p>{{ section.settings.coord_1_label }}</p>
+        <p>&nbsp;</p>
+        <p>{{ section.settings.coord_2 }}</p>
+        <p>{{ section.settings.coord_2_label }}</p>
+      </div>
+    {%- endif -%}
+
+    {%- if section.settings.product_label != blank -%}
+      <div class="takl-hero__right-label">
+        <p class="season">{{ section.settings.product_label_eyebrow }}</p>
+        <p class="name">{{ section.settings.product_label }}</p>
+      </div>
+    {%- endif -%}
+  </div>
+
+</section>
+
+{% schema %}
+{
+  "name": "Hero — Split",
+  "limit": 1,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Left Panel — Headline"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow text",
+      "default": "SS 2026 — For Every Latitude"
+    },
+    {
+      "type": "textarea",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Where the\nwild\nis refined.",
+      "info": "Use new lines to control line breaks. Wrap a word in <em></em> for italic accent."
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Outerwear for the person who skis Banff in January and anchors off the Exumas in July. Built for both. Compromises for neither."
+    },
+    {
+      "type": "text",
+      "id": "cta_primary_label",
+      "label": "Primary CTA label",
+      "default": "Shop Collection"
+    },
+    {
+      "type": "url",
+      "id": "cta_primary_url",
+      "label": "Primary CTA link"
+    },
+    {
+      "type": "text",
+      "id": "cta_secondary_label",
+      "label": "Secondary CTA label",
+      "default": "Our Story"
+    },
+    {
+      "type": "url",
+      "id": "cta_secondary_url",
+      "label": "Secondary CTA link"
+    },
+    {
+      "type": "header",
+      "content": "Right Panel — Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Hero image",
+      "info": "Recommended: 1400×1800px, portrait orientation"
+    },
+    {
+      "type": "text",
+      "id": "product_label_eyebrow",
+      "label": "Product label eyebrow",
+      "default": "New Arrival"
+    },
+    {
+      "type": "text",
+      "id": "product_label",
+      "label": "Product name label",
+      "default": "The Meridian Jacket"
+    },
+    {
+      "type": "header",
+      "content": "Coordinates"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_coordinates",
+      "label": "Show coordinates",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "coord_1",
+      "label": "Coordinate 1",
+      "default": "51°11′N 115°34′W"
+    },
+    {
+      "type": "text",
+      "id": "coord_1_label",
+      "label": "Coordinate 1 label",
+      "default": "Banff, AB — Winter"
+    },
+    {
+      "type": "text",
+      "id": "coord_2",
+      "label": "Coordinate 2",
+      "default": "25°28′N 76°40′W"
+    },
+    {
+      "type": "text",
+      "id": "coord_2_label",
+      "label": "Coordinate 2 label",
+      "default": "Exuma, BS — Summer"
+    }
+  ],
+  "presets": [
+    { "name": "Hero — Split" }
+  ]
+}
+{% endschema %}
