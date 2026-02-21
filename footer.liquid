@@ -1,129 +1,62 @@
-<footer class="takl-footer" role="contentinfo">
-  <div class="takl-footer__top">
-
-    <!-- Brand column -->
+<footer class="t-footer" role="contentinfo">
+  <div class="t-footer__top">
     <div>
-      <a href="{{ routes.root_url }}" class="takl-footer__brand-name">{{ shop.name }}</a>
-      <p class="takl-footer__tagline">{{ section.settings.tagline }}</p>
-      {%- if section.settings.show_coordinates -%}
-        <p class="takl-footer__coords">{{ section.settings.coordinates }}</p>
-      {%- endif -%}
+      <a href="{{ routes.root_url }}" class="t-footer__brand">TAKL</a>
+      <p class="t-footer__tagline">{{ section.settings.tagline }}</p>
+      <div class="t-footer__social">
+        {%- if section.settings.instagram != blank -%}
+          <a href="{{ section.settings.instagram }}" target="_blank" rel="noopener">Instagram</a>
+        {%- endif -%}
+        {%- if section.settings.tiktok != blank -%}
+          <a href="{{ section.settings.tiktok }}" target="_blank" rel="noopener">TikTok</a>
+        {%- endif -%}
+        {%- if section.settings.twitter != blank -%}
+          <a href="{{ section.settings.twitter }}" target="_blank" rel="noopener">X</a>
+        {%- endif -%}
+      </div>
     </div>
 
-    <!-- Link columns -->
     {%- for block in section.blocks -%}
-      {%- if block.type == 'link_column' -%}
-        <div {{ block.shopify_attributes }}>
-          <span class="takl-footer__col-title">{{ block.settings.title }}</span>
-          <ul class="takl-footer__links">
-            {%- if block.settings.menu != blank -%}
-              {%- for link in linklists[block.settings.menu].links -%}
-                <li><a href="{{ link.url }}">{{ link.title }}</a></li>
-              {%- endfor -%}
-            {%- endif -%}
-          </ul>
-        </div>
-      {%- endif -%}
+      <div {{ block.shopify_attributes }}>
+        <span class="t-footer__col-title">{{ block.settings.title }}</span>
+        <ul class="t-footer__links">
+          {%- for link in linklists[block.settings.menu].links -%}
+            <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+          {%- endfor -%}
+        </ul>
+      </div>
     {%- endfor -%}
-
   </div>
 
-  <div class="takl-footer__bottom">
-    <p class="takl-footer__copy">
-      &copy; {{ 'now' | date: '%Y' }} {{ shop.name }}.
-      {{ section.settings.copyright_text }}
-    </p>
-    <div class="takl-footer__socials">
-      {%- if section.settings.instagram_url != blank -%}
-        <a href="{{ section.settings.instagram_url }}" target="_blank" rel="noopener" aria-label="Instagram">Instagram</a>
-      {%- endif -%}
-      {%- if section.settings.pinterest_url != blank -%}
-        <a href="{{ section.settings.pinterest_url }}" target="_blank" rel="noopener" aria-label="Pinterest">Pinterest</a>
-      {%- endif -%}
-      {%- if section.settings.linkedin_url != blank -%}
-        <a href="{{ section.settings.linkedin_url }}" target="_blank" rel="noopener" aria-label="LinkedIn">LinkedIn</a>
-      {%- endif -%}
+  <div class="t-footer__bottom">
+    <p class="t-footer__copy">&copy; {{ 'now' | date: '%Y' }} TAKL. All rights reserved.</p>
+    <div class="t-footer__legal">
+      <a href="/policies/privacy-policy">Privacy</a>
+      <a href="/policies/terms-of-service">Terms</a>
+      <a href="/policies/refund-policy">Returns</a>
     </div>
   </div>
 </footer>
 
 {% schema %}
-{
-  "name": "Footer",
-  "limit": 1,
-  "blocks": [
-    {
-      "type": "link_column",
-      "name": "Link Column",
-      "settings": [
-        {
-          "type": "text",
-          "id": "title",
-          "label": "Column title",
-          "default": "Collections"
-        },
-        {
-          "type": "link_list",
-          "id": "menu",
-          "label": "Menu"
-        }
-      ]
-    }
-  ],
+{ "name": "Footer", "limit": 1,
+  "blocks": [{ "type": "col", "name": "Link Column", "settings": [
+    { "type": "text", "id": "title", "label": "Title", "default": "Shop" },
+    { "type": "link_list", "id": "menu", "label": "Menu" }
+  ]}],
   "settings": [
-    {
-      "type": "textarea",
-      "id": "tagline",
-      "label": "Brand tagline",
-      "default": "For the alpine and the ocean. For the summit and the shore. Built for every latitude."
-    },
-    {
-      "type": "checkbox",
-      "id": "show_coordinates",
-      "label": "Show coordinates",
-      "default": true
-    },
-    {
-      "type": "textarea",
-      "id": "coordinates",
-      "label": "Location text",
-      "default": "Banff, AB · Aspen, CO\nJupiter, FL · Nassau, BS"
-    },
-    {
-      "type": "text",
-      "id": "copyright_text",
-      "label": "Copyright suffix",
-      "default": "All rights reserved."
-    },
-    {
-      "type": "header",
-      "content": "Social Links"
-    },
-    {
-      "type": "url",
-      "id": "instagram_url",
-      "label": "Instagram URL"
-    },
-    {
-      "type": "url",
-      "id": "pinterest_url",
-      "label": "Pinterest URL"
-    },
-    {
-      "type": "url",
-      "id": "linkedin_url",
-      "label": "LinkedIn URL"
-    }
+    { "type": "text", "id": "tagline", "label": "Tagline", "default": "Limited drops. No restocks. Live Different." },
+    { "type": "url", "id": "instagram", "label": "Instagram URL" },
+    { "type": "url", "id": "tiktok", "label": "TikTok URL" },
+    { "type": "url", "id": "twitter", "label": "X / Twitter URL" }
   ],
-  "presets": [
-    {
-      "name": "Footer",
-      "blocks": [
-        { "type": "link_column", "settings": { "title": "Collections" } },
-        { "type": "link_column", "settings": { "title": "Company" } },
-        { "type": "link_column", "settings": { "title": "Client Care" } }
-      ]
-    }
-  ]
+  "presets": [{
+    "name": "Footer",
+    "blocks": [
+      { "type": "col", "settings": { "title": "Shop" } },
+      { "type": "col", "settings": { "title": "Info" } },
+      { "type": "col", "settings": { "title": "Help" } }
+    ]
+  }]
 }
 {% endschema %}

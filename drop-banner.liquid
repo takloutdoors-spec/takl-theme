@@ -1,0 +1,41 @@
+<section class="t-drop reveal">
+  <div class="t-drop__inner">
+    <div class="t-drop__left">
+      <span class="t-drop__label">{{ section.settings.eyebrow }}</span>
+      <h2 class="t-drop__name">{{ section.settings.drop_name }}</h2>
+      <p class="t-drop__sub">{{ section.settings.drop_sub }}</p>
+    </div>
+    <div class="t-drop__right">
+      {%- if section.settings.show_countdown and section.settings.drop_date != blank -%}
+        <div id="t-countdown" data-target="{{ section.settings.drop_date }}">
+          <div class="t-countdown">
+            <div class="t-countdown__unit"><span class="t-countdown__num">--</span><span class="t-countdown__label">Days</span></div>
+            <div class="t-countdown__unit"><span class="t-countdown__num">--</span><span class="t-countdown__label">Hrs</span></div>
+            <div class="t-countdown__unit"><span class="t-countdown__num">--</span><span class="t-countdown__label">Min</span></div>
+            <div class="t-countdown__unit"><span class="t-countdown__num">--</span><span class="t-countdown__label">Sec</span></div>
+          </div>
+        </div>
+      {%- endif -%}
+      {%- if section.settings.cta_label != blank -%}
+        <a href="{{ section.settings.cta_url }}" class="btn-primary">
+          {{ section.settings.cta_label }} <span class="arr">→</span>
+        </a>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{ "name": "Drop Banner",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Now Available" },
+    { "type": "text", "id": "drop_name", "label": "Drop name", "default": "The Memories Collection" },
+    { "type": "text", "id": "drop_sub", "label": "Subheading", "default": "Limited quantities. No restock." },
+    { "type": "checkbox", "id": "show_countdown", "label": "Show countdown", "default": true },
+    { "type": "text", "id": "drop_date", "label": "Drop date (ISO format)", "default": "2026-03-07T12:00:00", "info": "Format: YYYY-MM-DDTHH:MM:SS" },
+    { "type": "text", "id": "cta_label", "label": "Button label", "default": "Shop Now" },
+    { "type": "url", "id": "cta_url", "label": "Button link" }
+  ],
+  "presets": [{ "name": "Drop Banner" }]
+}
+{% endschema %}

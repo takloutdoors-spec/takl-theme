@@ -1,0 +1,130 @@
+<div class="t-product">
+  <div class="t-product__inner">
+
+    <!-- Gallery -->
+    <div class="t-product__gallery">
+      {%- assign featured_img = product.featured_image -%}
+      {%- if featured_img -%}
+        <img class="t-product__main-img" id="product-main-img"
+             src="{{ featured_img | image_url: width: 1200 }}"
+             alt="{{ featured_img.alt | default: product.title }}"
+             width="{{ featured_img.width }}" height="{{ featured_img.height }}">
+      {%- else -%}
+        <div class="t-product__main-img" style="background:#1a1a1a;"></div>
+      {%- endif -%}
+
+      {%- if product.images.size > 1 -%}
+        <div class="t-product__thumbs">
+          {%- for image in product.images limit: 4 -%}
+            <img class="t-product__thumb{% if forloop.first %} active{% endif %}"
+                 src="{{ image | image_url: width: 300 }}"
+                 alt="{{ image.alt | default: product.title }}"
+                 loading="lazy">
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+
+    <!-- Info -->
+    <div class="t-product__info reveal">
+      <a href="{{ product.collections.first.url }}" class="t-product__collection">
+        {{ product.collections.first.title | default: 'Memories Collection' }}
+      </a>
+      <h1 class="t-product__name">{{ product.title }}</h1>
+      <p class="t-product__price" id="product-price">{{ product.price | money }}</p>
+
+      {%- unless product.has_only_default_variant -%}
+        {%- for option in product.options_with_values -%}
+          <span class="t-product__label">{{ option.name }}</span>
+          <div class="t-product__options" data-option-index="{{ forloop.index0 }}">
+            {%- for value in option.values -%}
+              {%- assign available = false -%}
+              {%- for variant in product.variants -%}
+                {%- if variant.available -%}
+                  {%- assign opt_val = variant.options[forloop.parentloop.index0] -%}
+                  {%- if opt_val == value -%}{%- assign available = true -%}{%- endif -%}
+                {%- endif -%}
+              {%- endfor -%}
+              <button class="t-product__option{% if forloop.first %} selected{% endif %}{% unless available %} sold-out{% endunless %}"
+                      data-group="option{{ forloop.parentloop.index }}"
+                      data-value="{{ value }}"
+                      {% unless available %}disabled aria-label="{{ value }} - Sold Out"{% endunless %}>
+                {{ value }}
+              </button>
+            {%- endfor -%}
+          </div>
+        {%- endfor -%}
+      {%- endunless -%}
+
+      {%- if product.tags contains 'limited' or product.tags contains 'drop' -%}
+        <div class="t-product__drops">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <circle cx="8" cy="8" r="7" stroke="#3D6B5A" stroke-width="1.5"/>
+            <path d="M8 4v4l3 1.5" stroke="#3D6B5A" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          <p><strong>Limited drop.</strong> No restock. Once it's gone, it's gone.</p>
+        </div>
+      {%- endif -%}
+
+      <form action="{{ routes.cart_add_url }}" method="post" class="atc-form">
+        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+        <input type="hidden" name="quantity" value="1">
+        <button type="submit" class="btn-pine t-product__atc"
+                {% unless product.available %}disabled{% endunless %}>
+          {%- if product.available -%}Add to Bag{%- else -%}Sold Out{%- endif -%}
+        </button>
+      </form>
+
+      <button class="t-product__wishlist">♡ Save for Later</button>
+
+      {%- if product.description != blank -%}
+        <div class="t-product__desc">{{ product.description }}</div>
+      {%- endif -%}
+
+      <details class="t-product__details">
+        <summary>Details & Materials <span>+</span></summary>
+        <div class="t-product__details-body">
+          {%- if product.metafields.custom.materials != blank -%}
+            {{ product.metafields.custom.materials }}
+          {%- else -%}
+            Premium construction. Built to last through every adventure. Check the product description for specific material details.
+          {%- endif -%}
+        </div>
+      </details>
+
+      <details class="t-product__details">
+        <summary>Shipping & Returns <span>+</span></summary>
+        <div class="t-product__details-body">
+          Free shipping on orders over $150. All sales on limited drop items are final — no returns or exchanges. Standard items may be returned within 14 days unworn with tags attached.
+        </div>
+      </details>
+
+      <details class="t-product__details">
+        <summary>Sizing <span>+</span></summary>
+        <div class="t-product__details-body">
+          TAKL runs true to size. If you're between sizes, size up for a relaxed fit. Check our size guide for exact measurements.
+        </div>
+      </details>
+    </div>
+  </div>
+
+  {%- if recommendations.performed and recommendations.products_count > 0 -%}
+    <div class="t-products" style="padding-top:0">
+      <div class="t-products__head" style="padding:0 var(--gutter);max-width:var(--max);margin:0 auto 2rem">
+        <div>
+          <span class="eyebrow">Also in the Drop</span>
+          <h2 class="t-products__title" style="color:var(--white)">You Might Like</h2>
+        </div>
+      </div>
+      <div class="t-products__grid" style="padding:0 var(--gutter);max-width:var(--max);margin:0 auto">
+        {%- for rec in recommendations.products limit: 4 -%}
+          {%- render 'product-card', product: rec, index: forloop.index -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  {%- endif -%}
+</div>
+
+<script>
+  window.TAKL_VARIANTS = {{ product.variants | json }};
+</script>

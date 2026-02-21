@@ -1,0 +1,48 @@
+<section class="t-lifestyle" aria-label="Lifestyle">
+  {%- for block in section.blocks -%}
+    <div class="t-life-panel t-life-panel--{{ block.settings.theme }}" {{ block.shopify_attributes }}>
+      <div class="t-life-panel__bg">
+        {%- if block.settings.image != blank -%}
+          {{ block.settings.image | image_url: width: 1400
+             | image_tag: loading: 'lazy', alt: block.settings.image.alt | default: block.settings.title }}
+        {%- else -%}
+          <div style="width:100%;height:100%;background:{% if block.settings.theme == 'mountain' %}var(--pine){% else %}var(--clay){% endif %};"></div>
+        {%- endif -%}
+      </div>
+      <div class="t-life-panel__content reveal">
+        <span class="t-life-panel__tag">{{ block.settings.tag }}</span>
+        <h2 class="t-life-panel__title">{{ block.settings.title }}</h2>
+        <p class="t-life-panel__body">{{ block.settings.body }}</p>
+        {%- if block.settings.link_label != blank -%}
+          <a href="{{ block.settings.link_url }}" class="t-life-panel__link">
+            {{ block.settings.link_label }} →
+          </a>
+        {%- endif -%}
+      </div>
+    </div>
+  {%- endfor -%}
+</section>
+
+{% schema %}
+{ "name": "Lifestyle Split", "max_blocks": 2,
+  "blocks": [{
+    "type": "panel", "name": "Panel",
+    "settings": [
+      { "type": "select", "id": "theme", "label": "Color theme", "options": [{ "value": "mountain", "label": "Mountain (Pine)" },{ "value": "coast", "label": "Coastal (Clay)" }], "default": "mountain" },
+      { "type": "image_picker", "id": "image", "label": "Background image" },
+      { "type": "text", "id": "tag", "label": "Tag", "default": "Mountain" },
+      { "type": "text", "id": "title", "label": "Title", "default": "Hit Different\nOn The Mountain" },
+      { "type": "textarea", "id": "body", "label": "Body", "default": "Steamboat. Jackson. Aspen. Park City. Built for the days that turn into stories." },
+      { "type": "text", "id": "link_label", "label": "Link label", "default": "Shop Alpine" },
+      { "type": "url", "id": "link_url", "label": "Link" }
+    ]
+  }],
+  "presets": [{
+    "name": "Lifestyle Split",
+    "blocks": [
+      { "type": "panel", "settings": { "theme": "mountain", "tag": "The Mountain", "title": "Hit Different\nOn The Mountain", "body": "Steamboat. Jackson. Aspen. Park City. Built for the days that turn into stories.", "link_label": "Shop Alpine" } },
+      { "type": "panel", "settings": { "theme": "coast", "tag": "The Water", "title": "Salt Air.\nSunset Deck.", "body": "Jupiter. Las Olas. Wherever the boat takes you. The drop goes everywhere you go.", "link_label": "Shop Coastal" } }
+    ]
+  }]
+}
+{% endschema %}

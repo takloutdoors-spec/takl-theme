@@ -1,135 +1,89 @@
 {
   "sections": {
-    "announcement": {
-      "type": "announcement-bar",
-      "settings": {
-        "show_announcement": true,
-        "announcement_text": "Complimentary monogramming on all orders over $500. Shop the SS 2026 Collection."
-      }
-    },
-    "hero": {
-      "type": "hero",
-      "settings": {
-        "eyebrow": "SS 2026 — For Every Latitude",
-        "heading": "Where the\n<em>wild</em>\nis refined.",
-        "subheading": "Outerwear for the person who skis Banff in January and anchors off the Exumas in July. Built for both. Compromises for neither.",
-        "cta_primary_label": "Shop Collection",
-        "cta_secondary_label": "Our Story",
-        "show_coordinates": true,
-        "coord_1": "51°11′N 115°34′W",
-        "coord_1_label": "Banff, AB — Winter",
-        "coord_2": "25°28′N 76°40′W",
-        "coord_2_label": "Exuma, BS — Summer",
-        "product_label_eyebrow": "New Arrival",
-        "product_label": "The Meridian Jacket"
-      }
-    },
-    "ticker": {
-      "type": "ticker-band",
+    "announcement": { "type": "announcement-bar", "settings": { "show": true, "text": "The Memories Drop — Friday 12PM EST — Limited Quantities" } },
+    "header": { "type": "header", "settings": { "menu": "main-menu" } },
+    "hero": { "type": "hero", "settings": {
+      "eyebrow": "SS 2026 — The Memories Drop",
+      "title": "LIVE\nDIFFERENT.",
+      "body": "Limited drops for the people who ski hard, fish harder, and never miss a good night out.",
+      "cta_label": "Shop the Drop",
+      "cta2_label": "Our Story"
+    }},
+    "ticker": { "type": "ticker-band",
       "blocks": {
-        "t1": { "type": "item", "settings": { "text": "Merino Wool Blend" } },
-        "t2": { "type": "item", "settings": { "text": "TAKL — SS 2026" } },
-        "t3": { "type": "item", "settings": { "text": "Lifetime Repair Guarantee" } },
-        "t4": { "type": "item", "settings": { "text": "Sustainably Sourced" } },
-        "t5": { "type": "item", "settings": { "text": "Field & Water Tested" } },
-        "t6": { "type": "item", "settings": { "text": "Complimentary Monogramming" } }
+        "t1": { "type": "item", "settings": { "text": "Live Different" } },
+        "t2": { "type": "item", "settings": { "text": "Memories Drop" } },
+        "t3": { "type": "item", "settings": { "text": "Limited Run" } },
+        "t4": { "type": "item", "settings": { "text": "No Restock" } },
+        "t5": { "type": "item", "settings": { "text": "TAKL SS 2026" } },
+        "t6": { "type": "item", "settings": { "text": "Free Ship $150+" } }
       },
       "block_order": ["t1","t2","t3","t4","t5","t6"]
     },
-    "intro": {
-      "type": "intro-statement",
-      "settings": {
-        "eyebrow": "The TAKL Philosophy",
-        "title": "Two worlds.\nOne <em>wardrobe.</em>",
-        "body": "There is a certain kind of person who does not choose between adventure and elegance. They expect both. They move between the alpine and the ocean with the same ease they move between a board meeting and a dinner reservation.",
-        "body2": "TAKL is built for them. Technical enough for the mountain. Refined enough for the room."
-      }
-    },
-    "products": {
-      "type": "featured-products",
-      "settings": {
-        "eyebrow": "Featured",
-        "title": "New Arrivals",
-        "view_all_label": "View All",
-        "product_count": 5
-      }
-    },
-    "worlds": {
-      "type": "two-worlds",
+    "drop": { "type": "drop-banner", "settings": {
+      "eyebrow": "Now Live",
+      "drop_name": "The Memories Collection",
+      "drop_sub": "100 units. No restock. Gone by Sunday.",
+      "show_countdown": true,
+      "drop_date": "2026-03-07T12:00:00",
+      "cta_label": "Shop Now"
+    }},
+    "products": { "type": "featured-products", "settings": {
+      "eyebrow": "The Drop",
+      "title": "Memories Collection",
+      "count": 4,
+      "layout": "grid"
+    }},
+    "lifestyle": { "type": "lifestyle-split",
       "blocks": {
-        "alpine": {
-          "type": "world",
-          "settings": {
-            "label": "Alpine Collection",
-            "title": "The mountain\ndemands\n<em>everything.</em>",
-            "body": "Technical outerwear engineered for altitude. Waterproof membranes, insulated with recycled fill, sealed seams, and cut for full range of motion on the slope.",
-            "link_label": "Explore Alpine"
-          }
-        },
-        "coastal": {
-          "type": "world",
-          "settings": {
-            "label": "Coastal Collection",
-            "title": "The water\nasks\n<em>nothing less.</em>",
-            "body": "Lightweight performance fabrics that breathe in the heat and resist salt air. From the dock to the dinner table — no wardrobe change required.",
-            "link_label": "Explore Coastal"
-          }
-        }
+        "mountain": { "type": "panel", "settings": {
+          "theme": "mountain",
+          "tag": "The Mountain",
+          "title": "Hit Different\nOn The Mountain",
+          "body": "Steamboat. Jackson. Aspen. Park City. Built for the days that turn into stories.",
+          "link_label": "Shop Alpine"
+        }},
+        "coast": { "type": "panel", "settings": {
+          "theme": "coast",
+          "tag": "The Water",
+          "title": "Salt Air.\nSunset Deck.",
+          "body": "Jupiter. Las Olas. Wherever the boat takes you. The drop goes everywhere you go.",
+          "link_label": "Shop Coastal"
+        }}
       },
-      "block_order": ["alpine","coastal"]
+      "block_order": ["mountain","coast"]
     },
-    "craft": {
-      "type": "craft-strip",
+    "banner": { "type": "collection-banner", "settings": {
+      "eyebrow": "The Memories Drop",
+      "title": "This Is\nThe Life.",
+      "body": "Built for the person who earns it and lives it. The Memories collection is limited — when it's gone, it's gone.",
+      "show_stats": true,
+      "cta_label": "Shop the Drop"
+    },
       "blocks": {
-        "c1": { "type": "pillar", "settings": { "title": "Materials", "body": "Merino, pima cotton, technical nylon, recycled fill. Sourced from certified mills in Italy, Japan, and New Zealand." } },
-        "c2": { "type": "pillar", "settings": { "title": "Construction", "body": "Reinforced seams, YKK hardware, and tailoring techniques adapted from alpine guiding tradition." } },
-        "c3": { "type": "pillar", "settings": { "title": "Testing", "body": "Every product field-tested in Banff, Patagonia, and the Bahamian out-islands before a single unit is sold." } },
-        "c4": { "type": "pillar", "settings": { "title": "Guarantee", "body": "Free lifetime repairs on every TAKL garment. Built to last. Backed to last longer." } }
+        "s1": { "type": "stat", "settings": { "number": "100", "label": "Units Only" } },
+        "s2": { "type": "stat", "settings": { "number": "0", "label": "Restocks Ever" } },
+        "s3": { "type": "stat", "settings": { "number": "1", "label": "Drop Window" } }
       },
-      "block_order": ["c1","c2","c3","c4"]
+      "block_order": ["s1","s2","s3"]
     },
-    "quote": {
-      "type": "pull-quote",
-      "settings": {
-        "quote": "There is no conflict between the mountain and the marina. TAKL was built on that belief.",
-        "attribution": "Thomas Alcott, Founder & Creative Director"
-      }
+    "newsletter": { "type": "newsletter", "settings": {
+      "eyebrow": "First Access",
+      "title": "Get Drop Alerts Before Anyone Else.",
+      "body": "Limited drops sell out fast. Get on the list for early access, exclusive previews, and drops you won't see anywhere else.",
+      "button": "I'm In",
+      "note": "No spam. Unsubscribe any time."
+    }},
+    "footer": { "type": "footer", "settings": {
+      "tagline": "Limited drops. No restocks. Live Different."
     },
-    "collections": {
-      "type": "collections-grid",
-      "settings": {
-        "eyebrow": "Shop by World",
-        "title": "The Collections",
-        "view_all_label": "All Collections"
-      },
       "blocks": {
-        "col1": { "type": "collection", "settings": { "tag": "Winter / Spring", "title": "Alpine Series" } },
-        "col2": { "type": "collection", "settings": { "tag": "Summer / Fall", "title": "Coastal Series" } },
-        "col3": { "type": "collection", "settings": { "tag": "Year Round", "title": "Meridian Line" } }
+        "c1": { "type": "col", "settings": { "title": "Shop" } },
+        "c2": { "type": "col", "settings": { "title": "Info" } },
+        "c3": { "type": "col", "settings": { "title": "Help" } }
       },
-      "block_order": ["col1","col2","col3"]
-    },
-    "newsletter": {
-      "type": "newsletter",
-      "settings": {
-        "eyebrow": "The Inner Circle",
-        "title": "First access.\n<em>Always.</em>",
-        "body": "Limited drops, private events, and early access to new collections — sent only to those who know what to look for.",
-        "button_label": "Join",
-        "note": "Private and unobtrusive. Unsubscribe anytime."
-      }
+      "block_order": ["c1","c2","c3"]
     }
   },
-  "order": [
-    "announcement",
-    "hero",
-    "ticker",
-    "intro",
-    "products",
-    "worlds",
-    "craft",
-    "quote",
-    "collections",
-    "newsletter"
-  ]
+  "order": ["announcement","header","hero","ticker","drop","products","lifestyle","banner","newsletter","footer"]
 }

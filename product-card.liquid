@@ -1,45 +1,54 @@
-{%- comment -%}
-  Usage: {% render 'product-card', product: product, badge: 'New', index: forloop.index %}
-{%- endcomment -%}
-
 {%- liquid
-  assign badge_text = badge | default: ''
-  assign card_url   = product.url | default: '#'
-  assign card_image = product.featured_image
-  assign card_price = product.price | money
-  assign card_title = product.title
-  assign card_type  = product.type | default: ''
-  assign card_variants = product.variants.size
+  assign first_variant = product.first_available_variant | default: product.variants.first
+  assign is_sold_out = false
+  unless product.available
+    assign is_sold_out = true
+  endunless
 -%}
 
-<article class="takl-product-card takl-reveal{% if index > 1 %} takl-reveal--d{{ index | minus: 1 }}{% endif %}"
-         data-product-id="{{ product.id }}">
-  <a href="{{ card_url }}" aria-label="{{ card_title | escape }}">
-    <div class="takl-product-card__media">
-
-      {%- if badge_text != blank -%}
-        <span class="takl-product-card__badge" aria-label="{{ badge_text }}">{{ badge_text }}</span>
-      {%- endif -%}
-
-      {%- if card_image != blank -%}
-        {{ card_image | image_url: width: 800
-           | image_tag:
-             class: 'takl-product-card__img',
-             loading: 'lazy',
-             alt: card_image.alt | default: card_title }}
+<article class="t-card reveal reveal-d{{ index | modulo: 4 | plus: 1 }}">
+  <a href="{{ product.url }}">
+    <div class="t-card__media">
+      {%- if product.featured_image -%}
+        {{ product.featured_image | image_url: width: 800
+           | image_tag: loading: 'lazy', alt: product.featured_image.alt | default: product.title }}
       {%- else -%}
-        <div class="takl-product-card__img" style="background: #3D4E60; aspect-ratio: 3/4;"></div>
+        <div style="width:100%;height:100%;background:#1a1a1a;"></div>
       {%- endif -%}
 
+      {%- if is_sold_out -%}
+        <span class="t-card__badge t-card__badge--sold">Sold Out</span>
+      {%- elsif product.tags contains 'new' or product.tags contains 'New' -%}
+        <span class="t-card__badge t-card__badge--new">New</span>
+      {%- elsif product.tags contains 'limited' or product.tags contains 'Limited' -%}
+        <span class="t-card__badge t-card__badge--limited">Limited</span>
+      {%- endif -%}
+
+      {%- unless is_sold_out -%}
+        <button class="t-card__quick" data-variant="{{ first_variant.id }}" aria-label="Quick add {{ product.title }}">
+          Quick Add
+        </button>
+      {%- endunless -%}
     </div>
-    <div class="takl-product-card__info">
-      <p class="takl-product-card__name">{{ card_title }}</p>
-      <div class="takl-product-card__meta">
-        <span class="takl-product-card__detail">
-          {{ card_type }}
-          {%- if card_variants > 1 %} · {{ card_variants }} Colorways{%- endif -%}
+
+    <div class="t-card__info">
+      <p class="t-card__name">{{ product.title }}</p>
+      <p class="t-card__meta">{{ product.type }}{% if product.variants.size > 1 %} · {{ product.variants.size }} options{% endif %}</p>
+      <div class="t-card__bottom">
+        <span class="t-card__price">
+          {%- if is_sold_out -%}
+            Sold Out
+          {%- else -%}
+            {{ product.price | money }}
+          {%- endif -%}
         </span>
-        <span class="takl-product-card__price">{{ card_price }}</span>
+        {%- if product.options_with_values.first.name == 'Color' -%}
+          <div class="t-card__swatches" aria-hidden="true">
+            {%- for value in product.options_with_values.first.values limit: 4 -%}
+              <span class="t-card__swatch" style="background:{{ value | handleize }};"></span>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
       </div>
     </div>
   </a>

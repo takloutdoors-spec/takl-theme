@@ -1,0 +1,58 @@
+<section class="t-collection-banner">
+  <div class="t-collection-banner__inner">
+    <div class="reveal">
+      <span class="eyebrow">{{ section.settings.eyebrow }}</span>
+      <h2 class="t-collection-banner__title">{{ section.settings.title }}</h2>
+      <p class="t-collection-banner__body">{{ section.settings.body }}</p>
+      {%- if section.settings.show_stats -%}
+        <div class="t-collection-banner__stats">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'stat' -%}
+              <div class="t-stat" {{ block.shopify_attributes }}>
+                <span class="t-stat__num">{{ block.settings.number }}</span>
+                <span class="t-stat__label">{{ block.settings.label }}</span>
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+      {%- if section.settings.cta_label != blank -%}
+        <a href="{{ section.settings.cta_url }}" class="btn-primary">
+          {{ section.settings.cta_label }} <span class="arr">→</span>
+        </a>
+      {%- endif -%}
+    </div>
+    {%- if section.settings.image != blank -%}
+      <div class="t-collection-banner__img reveal reveal-d2">
+        {{ section.settings.image | image_url: width: 900
+           | image_tag: loading: 'lazy', alt: section.settings.image.alt }}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{ "name": "Collection Banner",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The Memories Drop" },
+    { "type": "textarea", "id": "title", "label": "Title", "default": "This Is\nThe <span style='color:var(--clay)'>Life.</span>" },
+    { "type": "textarea", "id": "body", "label": "Body", "default": "Built for the person who earns it and lives it. The Memories collection is limited — when it's gone, it's gone." },
+    { "type": "checkbox", "id": "show_stats", "label": "Show stats", "default": true },
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "text", "id": "cta_label", "label": "CTA label", "default": "Shop the Drop" },
+    { "type": "url", "id": "cta_url", "label": "CTA link" }
+  ],
+  "blocks": [{ "type": "stat", "name": "Stat", "settings": [
+    { "type": "text", "id": "number", "label": "Number", "default": "100" },
+    { "type": "text", "id": "label", "label": "Label", "default": "Units Only" }
+  ]}],
+  "presets": [{
+    "name": "Collection Banner",
+    "blocks": [
+      { "type": "stat", "settings": { "number": "100", "label": "Units Only" } },
+      { "type": "stat", "settings": { "number": "0", "label": "Restocks Ever" } },
+      { "type": "stat", "settings": { "number": "1", "label": "Drop Window" } }
+    ]
+  }]
+}
+{% endschema %}

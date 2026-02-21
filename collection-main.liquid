@@ -1,0 +1,20 @@
+<div class="t-collection">
+  <div class="t-collection__hero">
+    <span class="eyebrow">{{ collection.title }}</span>
+    <h1 class="t-collection__title">{{ collection.title }}</h1>
+    <p class="t-collection__count">{{ collection.products_count }} pieces</p>
+  </div>
+
+  {%- if collection.products.size > 0 -%}
+    <div class="t-collection__grid">
+      {%- for product in collection.products -%}
+        {%- render 'product-card', product: product, index: forloop.index -%}
+      {%- endfor -%}
+    </div>
+  {%- else -%}
+    <div style="text-align:center;padding:5rem var(--gutter);color:var(--mid)">
+      <p style="font-size:1.1rem;margin-bottom:1rem">Drop coming soon.</p>
+      <a href="/" class="btn-primary">Back Home</a>
+    </div>
+  {%- endif -%}
+</div>

@@ -1,0 +1,57 @@
+{%- if cart.item_count > 0 -%}
+<div class="t-cart-page">
+  <h1 class="t-cart-page__title">Your Bag ({{ cart.item_count }})</h1>
+  <div class="t-cart-page__grid">
+    <div class="t-cart-page__items">
+      {%- for item in cart.items -%}
+        <div class="cart-item">
+          <a href="{{ item.url }}">
+            {%- if item.image -%}
+              <img class="cart-item__img" src="{{ item.image | image_url: width: 200 }}" alt="{{ item.title }}">
+            {%- else -%}
+              <div class="cart-item__img" style="background:#1a1a1a;"></div>
+            {%- endif -%}
+          </a>
+          <div>
+            <p class="cart-item__name">{{ item.product.title }}</p>
+            {%- unless item.variant.title == 'Default Title' -%}
+              <p class="cart-item__variant">{{ item.variant.title }}</p>
+            {%- endunless -%}
+            <p class="cart-item__price">{{ item.final_line_price | money }}</p>
+          </div>
+          <div style="text-align:right">
+            <p style="font-size:.8rem;color:var(--mid);margin-bottom:.5rem">Qty: {{ item.quantity }}</p>
+            <form action="{{ routes.cart_change_url }}" method="post">
+              <input type="hidden" name="id" value="{{ item.key }}">
+              <input type="hidden" name="quantity" value="0">
+              <button type="submit" class="cart-item__remove">Remove</button>
+            </form>
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+
+    <div class="t-cart-summary">
+      <h3>Order Summary</h3>
+      {%- for item in cart.items -%}
+        <div class="t-cart-summary__line">
+          <span>{{ item.product.title }} × {{ item.quantity }}</span>
+          <span>{{ item.final_line_price | money }}</span>
+        </div>
+      {%- endfor -%}
+      <div class="t-cart-summary__total">
+        <span>Total</span>
+        <span>{{ cart.total_price | money }}</span>
+      </div>
+      <a href="{{ routes.checkout }}" class="btn-pine">Checkout →</a>
+      <p class="cart-note" style="margin-top:1rem">Shipping & taxes calculated at checkout</p>
+    </div>
+  </div>
+</div>
+{%- else -%}
+<div style="min-height:80vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:var(--gutter)">
+  <h1 style="font-size:3rem;font-weight:800;margin-bottom:1rem">Your bag is empty.</h1>
+  <p style="color:var(--mid);margin-bottom:2rem">The drop won't wait. Go get it.</p>
+  <a href="/collections" class="btn-primary">Shop the Drop →</a>
+</div>
+{%- endif -%}

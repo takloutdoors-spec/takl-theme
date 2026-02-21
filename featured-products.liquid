@@ -1,114 +1,38 @@
-<section class="takl-products" aria-labelledby="featured-products-title">
-
-  <div class="takl-section-header takl-reveal">
+<section class="t-products">
+  <div class="t-products__head reveal">
     <div>
-      <span class="takl-eyebrow">{{ section.settings.eyebrow }}</span>
-      <h2 class="takl-section-title" id="featured-products-title">{{ section.settings.title }}</h2>
+      <span class="eyebrow">{{ section.settings.eyebrow }}</span>
+      <h2 class="t-products__title" style="color:var(--white)">{{ section.settings.title }}</h2>
     </div>
-    {%- if section.settings.view_all_label != blank -%}
-      <a href="{{ section.settings.view_all_url }}" class="btn-ghost-dark">
-        {{ section.settings.view_all_label }} →
-      </a>
-    {%- endif -%}
-  </div>
-
-  <div class="takl-products__grid">
     {%- if section.settings.collection != blank -%}
-      {%- assign featured_collection = collections[section.settings.collection] -%}
-      {%- assign product_limit = section.settings.product_count | default: 5 -%}
-
-      {%- for product in featured_collection.products limit: product_limit -%}
-        {%- liquid
-          if forloop.first
-            assign badge = 'New'
-          elsif product.metafields.custom.badge != blank
-            assign badge = product.metafields.custom.badge
-          else
-            assign badge = ''
-          endif
-        -%}
-        {% render 'product-card', product: product, badge: badge, index: forloop.index %}
-      {%- endfor -%}
-
-    {%- else -%}
-      {%- comment -%} Fallback: show blocks if no collection is selected {%- endcomment -%}
-      {%- for block in section.blocks -%}
-        {%- if block.type == 'product' -%}
-          {%- assign product = all_products[block.settings.product] -%}
-          {%- if product != blank -%}
-            {% render 'product-card', product: product, badge: block.settings.badge, index: forloop.index %}
-          {%- endif -%}
-        {%- endif -%}
-      {%- endfor -%}
+      <a href="{{ collections[section.settings.collection].url }}" class="t-products__view">View All →</a>
     {%- endif -%}
   </div>
 
+  <div class="t-products__grid{% if section.settings.layout == 'wide' %} t-products__grid--wide{% endif %}">
+    {%- liquid
+      if section.settings.collection != blank
+        assign prod_list = collections[section.settings.collection].products
+      else
+        assign prod_list = section.blocks | map: 'settings'
+      endif
+    -%}
+
+    {%- for product in prod_list limit: section.settings.count -%}
+      {%- render 'product-card', product: product, index: forloop.index -%}
+    {%- endfor -%}
+  </div>
 </section>
 
 {% schema %}
-{
-  "name": "Featured Products",
+{ "name": "Featured Products",
   "settings": [
-    {
-      "type": "text",
-      "id": "eyebrow",
-      "label": "Eyebrow",
-      "default": "Featured"
-    },
-    {
-      "type": "text",
-      "id": "title",
-      "label": "Section title",
-      "default": "New Arrivals"
-    },
-    {
-      "type": "text",
-      "id": "view_all_label",
-      "label": "View all label",
-      "default": "View All"
-    },
-    {
-      "type": "url",
-      "id": "view_all_url",
-      "label": "View all link"
-    },
-    {
-      "type": "collection",
-      "id": "collection",
-      "label": "Collection",
-      "info": "Select a collection to automatically populate products"
-    },
-    {
-      "type": "range",
-      "id": "product_count",
-      "min": 2,
-      "max": 8,
-      "step": 1,
-      "default": 5,
-      "label": "Number of products"
-    }
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The Drop" },
+    { "type": "text", "id": "title", "label": "Title", "default": "Memories Collection" },
+    { "type": "collection", "id": "collection", "label": "Collection" },
+    { "type": "range", "id": "count", "min": 2, "max": 8, "step": 1, "default": 4, "label": "Number of products" },
+    { "type": "select", "id": "layout", "label": "Layout", "options": [{ "value": "grid", "label": "Even grid" },{ "value": "wide", "label": "Wide first" }], "default": "grid" }
   ],
-  "blocks": [
-    {
-      "type": "product",
-      "name": "Product (manual)",
-      "settings": [
-        {
-          "type": "product",
-          "id": "product",
-          "label": "Product"
-        },
-        {
-          "type": "text",
-          "id": "badge",
-          "label": "Badge text",
-          "default": "New"
-        }
-      ]
-    }
-  ],
-  "presets": [
-    { "name": "Featured Products" }
-  ]
+  "presets": [{ "name": "Featured Products" }]
 }
 {% endschema %}

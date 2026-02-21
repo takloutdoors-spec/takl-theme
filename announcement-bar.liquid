@@ -1,38 +1,20 @@
-{%- if section.settings.show_announcement -%}
-  <div class="takl-announcement" role="note">
-    {%- if section.settings.announcement_link != blank -%}
-      <a href="{{ section.settings.announcement_link }}">{{ section.settings.announcement_text }}</a>
-    {%- else -%}
-      {{ section.settings.announcement_text }}
-    {%- endif -%}
-  </div>
+{%- if section.settings.show -%}
+<div class="t-announce">
+  {%- if section.settings.link != blank -%}
+    <a href="{{ section.settings.link }}">{{ section.settings.text }}</a>
+  {%- else -%}
+    {{ section.settings.text }}
+  {%- endif -%}
+</div>
 {%- endif -%}
 
 {% schema %}
-{
-  "name": "Announcement Bar",
-  "limit": 1,
+{ "name": "Announcement Bar", "limit": 1,
   "settings": [
-    {
-      "type": "checkbox",
-      "id": "show_announcement",
-      "label": "Show announcement",
-      "default": true
-    },
-    {
-      "type": "text",
-      "id": "announcement_text",
-      "label": "Announcement text",
-      "default": "Complimentary monogramming on all orders over $500. Shop the SS 2026 Collection."
-    },
-    {
-      "type": "url",
-      "id": "announcement_link",
-      "label": "Link (optional)"
-    }
+    { "type": "checkbox", "id": "show", "label": "Show bar", "default": true },
+    { "type": "text", "id": "text", "label": "Text", "default": "The Memories Drop — Friday 12PM EST — Limited Quantities" },
+    { "type": "url", "id": "link", "label": "Link (optional)" }
   ],
-  "presets": [
-    { "name": "Announcement Bar" }
-  ]
+  "presets": [{ "name": "Announcement Bar" }]
 }
 {% endschema %}

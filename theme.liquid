@@ -1,59 +1,85 @@
 <!doctype html>
-<html class="no-js" lang="{{ request.locale.iso_code }}">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="theme-color" content="#2A3240">
-    <link rel="canonical" href="{{ canonical_url }}">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<html lang="{{ request.locale.iso_code }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#0D0D0D">
+  <link rel="canonical" href="{{ canonical_url }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-    {%- if settings.favicon != blank -%}
-      <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32 }}">
-    {%- endif -%}
+  {%- if settings.favicon != blank -%}
+    <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32 }}">
+  {%- endif -%}
 
-    <title>
-      {{ page_title }}
-      {%- if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif -%}
-      {%- if current_page != 1 %} &ndash; Page {{ current_page }}{% endif -%}
-      {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
-    </title>
+  <title>{{ page_title }}{%- unless page_title contains shop.name %} — {{ shop.name }}{%- endunless -%}</title>
+  {%- if page_description -%}<meta name="description" content="{{ page_description | escape }}">{%- endif -%}
 
-    {%- if page_description -%}
-      <meta name="description" content="{{ page_description | escape }}">
-    {%- endif -%}
+  {{ content_for_header }}
+  {{ 'takl.css' | asset_url | stylesheet_tag }}
+</head>
 
-    {% render 'meta-tags' %}
+<body class="template-{{ template.name }}{% if template.suffix %}-{{ template.suffix }}{% endif %}">
+  <a class="skip-link" href="#main">Skip to content</a>
 
-    {{ content_for_header }}
+  <!-- Cursor -->
+  <div id="t-cursor" aria-hidden="true"></div>
+  <div id="t-cursor-ring" aria-hidden="true"></div>
 
-    {{ 'takl.css' | asset_url | stylesheet_tag }}
-    {{ 'takl-sections.css' | asset_url | stylesheet_tag }}
-  </head>
+  <!-- Overlay -->
+  <div class="t-overlay" id="t-overlay" aria-hidden="true"></div>
 
-  <body class="template-{{ template.name }}">
-    <a class="skip-to-content-link" href="#MainContent">Skip to content</a>
+  <!-- Cart Drawer -->
+  <div class="t-drawer" id="t-cart-drawer" role="dialog" aria-label="Cart" aria-modal="true">
+    <div class="t-drawer__head">
+      <span class="t-drawer__title">Your Bag (<span class="t-cart-count">0</span>)</span>
+      <button class="t-drawer__close" aria-label="Close cart">&#x2715;</button>
+    </div>
+    <div class="cart-drawer__body" id="cart-drawer-body">
+      <div class="cart-drawer__empty">
+        <p>Your bag is empty.</p>
+        <a href="/collections" class="btn-outline" style="display:inline-flex">Shop the Drop →</a>
+      </div>
+    </div>
+    <div class="cart-drawer__footer">
+      <div class="cart-subtotal">
+        <span>Subtotal</span>
+        <strong id="cart-subtotal">$0.00</strong>
+      </div>
+      <a href="/cart" class="btn-pine">Checkout →</a>
+      <p class="cart-note">Shipping & taxes calculated at checkout</p>
+    </div>
+  </div>
 
-    <div id="takl-cursor" aria-hidden="true"></div>
-    <div id="takl-cursor-ring" aria-hidden="true"></div>
-    <div class="takl-overlay" id="takl-overlay" aria-hidden="true"></div>
-
-    <nav class="takl-nav-drawer" id="takl-drawer" aria-label="Mobile navigation">
-      <button class="takl-nav-drawer__close" id="takl-drawer-close" aria-label="Close menu">&#x2715;</button>
+  <!-- Nav Drawer -->
+  <nav class="t-drawer" id="t-nav-drawer" aria-label="Navigation">
+    <div class="t-drawer__head">
+      <span class="t-drawer__title" style="font-size:1.2rem;font-weight:800;letter-spacing:.2em">TAKL</span>
+      <button class="t-drawer__close" aria-label="Close navigation">&#x2715;</button>
+    </div>
+    <div class="nav-drawer__links">
       {%- for link in linklists.main-menu.links -%}
-        <a class="takl-nav-drawer__link" href="{{ link.url }}">{{ link.title }}</a>
+        <a class="nav-drawer__link" href="{{ link.url }}">{{ link.title }}</a>
       {%- endfor -%}
-    </nav>
+    </div>
+    <div class="nav-drawer__sub">
+      {%- if shop.customer_accounts_enabled -%}
+        <a href="{{ routes.account_url }}">Account</a>
+      {%- endif -%}
+      <a href="{{ routes.cart_url }}">Cart</a>
+    </div>
+  </nav>
 
-    {%- sections 'header-group' -%}
+  {%- section 'announcement-bar' -%}
+  {%- section 'header' -%}
 
-    <main id="MainContent" role="main" tabindex="-1">
-      {{ content_for_layout }}
-    </main>
+  <main id="main" tabindex="-1">
+    {{ content_for_layout }}
+  </main>
 
-    {%- sections 'footer-group' -%}
+  {%- section 'footer' -%}
 
-    <script src="{{ 'takl.js' | asset_url }}" defer></script>
-  </body>
+  <script src="{{ 'takl.js' | asset_url }}" defer></script>
+</body>
 </html>
